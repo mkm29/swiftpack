@@ -101,11 +101,36 @@ The following are required:
 
 ## Usage
 
-<div id="basic-usage"/>
+<div id="usage-init"/>
+
+### Initializaton
+
+You can simply start the stack locally via `docker compose up --build -d`. Currently you may see an error starting the webserver initially, if you run into this you need to perform the migrations:
+
+```bash
+docker compose exec web alembic init -t async migrations
+docker compose exec web alembic upgrade head|<REVISION_ID>
+```
+
+or you can create the `song` table via the following `SQL`:
+
+```
+docker compose exec db psql -U postgres -d swiftpack -w -c "CREATE TABLE song (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL, artist VARCHAR(255) NOT NULL, year INT);"
+```
+
+<div id="usage-basic"/>
 
 ### Basic
 
-__todo__
+As this is simply a very basic FastAPI + async Postgres app, you will be to view a few endpoints such as:
+
+- `/health`: Currently only return a `{"status": "ok"}` JSON response
+- `/info`: Basic application settings
+- `/metrics`: Prometheus metrics
+- `/api/v1/songs/`
+  - `GET` to list all `songs` in database
+  - `POST` use `curl` to create a song: `curl -d '{"name":"Wagon Wheel", "artist":"O.C.M.S", "year":"2004"}' -H "Content-Type: application/json" -X POST http://localhost:8004/api/v1/songs`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -114,12 +139,31 @@ __todo__
 
 ## Features
 
-- Webserver
-  - [ ] feature 1
+- API
+  - Songs
+    - [x] List
+    - [x] Create
+    - [ ] Search
+  - Artists
+    - [ ] List
+    - [ ] Create
+    - [ ] Search
+  - Shows
+    - [ ] List
+    - [ ] Create
+    - [ ] Search
+  - Authentication
+    - [ ] Basic
+    - [ ] JWT/OIDC with Keycloak
 - Database
-  - [ ] feature 2
+  - Models
+    - [x] Song
+    - [ ] Artist
+    - [ ] Show
 - Migrations
-  - [ ] feature 3
+  - [x] Implement basic Alembic logic
+- Keycloak
+  - [ ] Create service (`docker-compose`)
 
 See the [open issues](https://github.com/mkm29/swiftpack/issues) for a full list of proposed features (and known issues/bugs).
 

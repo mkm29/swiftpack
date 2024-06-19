@@ -43,7 +43,7 @@ RUN pip install --upgrade pip setuptools wheel
 # switch to the nobody user
 USER 65534
 
-RUN pip install  *.whl
+RUN pip install *.whl
 
 EXPOSE 8000
 
