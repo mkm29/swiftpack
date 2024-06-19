@@ -27,9 +27,11 @@ FROM base as final
 
 COPY --from=builder /venv /venv
 COPY --from=builder /app/dist .
-COPY --from=builder /app/entrypoint.sh .
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
-# RUN . /venv/bin/activate && pip install *.whl
-# ENTRYPOINT ["uvicorn"]
-# CMD ["--port", "8000", "swiftpack.src.main:app", "--reload", "--workers", "1", "--host", "0.0.0.0"]
+ENV PATH="/venv/bin:$PATH"
+
+RUN pip install *.whl
+
+# Since the virtual environment is activated in a RUN instruction, it will not persist to the ENTRYPOINT or CMD.
+ENTRYPOINT ["/bin/bash", "-c", "source /venv/bin/activate && exec $0 \"$@\"", "uvicorn"]
+CMD ["--port", "8000", "swiftpack.src.main:create_app", "--factory", "--workers", "1", "--host", "0.0.0.0"]

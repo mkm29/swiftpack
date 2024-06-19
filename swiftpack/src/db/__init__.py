@@ -11,10 +11,9 @@ from swiftpack.src.config import Settings
 
 # function to create engine
 def get_engine():
-    # database_url: postgresql+asyncpg://postgres:postgres@db:5432/foo
     database_url: str = Settings().database_url
     engine = create_async_engine(database_url, echo=True, future=True)
-    yield engine
+    return engine
 
 
 async def init_db():

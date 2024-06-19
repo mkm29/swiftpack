@@ -6,6 +6,8 @@ services:
     build:
       context: ./.
       dockerfile: Dockerfile
+    command: alembic init -t async swiftpack/migrations  
+    # command:  uvicorn --port 8000 swiftpack.src.main:create_app --factory --workers 1 --host 0.0.0.0
     # command: echo $PATH
     # command: uvicorn swiftpack.src.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     # volumes:
