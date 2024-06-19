@@ -60,10 +60,12 @@ def create_app() -> FastAPI:
         prefix=f"{app.state.settings.api_prefix}/songs",
         tags=["songs"],
         dependencies=[Depends(get_session)],
-        resonses={
+        responses={
             200: {"description": "Success"},
             201: {"description": "Created"},
             404: {"description": "Not found"},
             500: {"description": "Internal Server Error"},
         },
     )
+
+    return app

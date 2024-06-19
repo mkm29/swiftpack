@@ -23,13 +23,30 @@ RUN . /venv/bin/activate && poetry install --no-dev --no-root
 COPY . .
 RUN . /venv/bin/activate && poetry build
 
-FROM base as final
+FROM python:3.11.8-slim as prod
 
-COPY --from=builder /venv /venv
-COPY --from=builder /app/dist .
-COPY --from=builder /app/entrypoint.sh .
+COPY --from=builder --chown=65534:65534 /venv /venv
+COPY --from=builder --chown=65534:65534 /app/dist .
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
-# RUN . /venv/bin/activate && pip install *.whl
-# ENTRYPOINT ["uvicorn"]
-# CMD ["--port", "8000", "swiftpack.src.main:app", "--reload", "--workers", "1", "--host", "0.0.0.0"]
+ENV PATH="/venv/bin:$PATH"
+
+# harden
+# update util-linux
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    util-linux \
+    libc-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+# update pypa-setuptool
+RUN pip install --upgrade pip setuptools wheel
+
+# switch to the nobody user
+USER 65534
+
+RUN pip install *.whl
+
+EXPOSE 8000
+
+# Since the virtual environment is activated in a RUN instruction, it will not persist to the ENTRYPOINT or CMD.
+ENTRYPOINT ["/bin/bash", "-c", "source /venv/bin/activate && exec $0 \"$@\"", "uvicorn"]
+CMD ["--port", "8000", "swiftpack.src.main:create_app", "--factory", "--workers", "1", "--host", "0.0.0.0"]
