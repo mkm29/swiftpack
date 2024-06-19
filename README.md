@@ -159,8 +159,9 @@ As this is simply a very basic FastAPI + async Postgres app, you will be to view
 - Database
   - Models
     - [x] Song
-    - [ ] Artist
-    - [ ] Show
+    - [x] Artist
+    - [x] Show
+    - [x] Genre
 - Migrations
   - [x] Implement basic Alembic logic
 - Keycloak
