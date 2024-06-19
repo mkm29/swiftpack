@@ -1,4 +1,4 @@
-import os
+"""Database module to create engine and session for database operations."""
 
 from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -8,12 +8,14 @@ from sqlalchemy.orm import sessionmaker
 
 from swiftpack.src.config import Settings
 
+
 # function to create engine
 def get_engine():
     # database_url: postgresql+asyncpg://postgres:postgres@db:5432/foo
     database_url: str = Settings().database_url
     engine = create_async_engine(database_url, echo=True, future=True)
     yield engine
+
 
 async def init_db():
     async with get_engine().begin() as conn:
@@ -22,8 +24,6 @@ async def init_db():
 
 
 async def get_session() -> AsyncSession:
-    async_session = sessionmaker(
-        get_engine(), class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(get_engine(), class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session

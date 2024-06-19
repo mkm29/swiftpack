@@ -151,12 +151,12 @@ Don't forget to give the project a star! Thanks again!
 Distributed under the MIT License. See [LICENSE](./LICENSE.md) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
- 
+
 <!-- ACKNOWLEDGMENTS -->
 <div id="acknowledgments"/>
 
 ## Acknowledgments
- 
+
 * Lead Developer - Mitchell Murphy
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

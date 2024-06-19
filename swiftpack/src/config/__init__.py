@@ -3,6 +3,7 @@
 # from pydantic import BaseSettings
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     app_name: str = "swiftpack"
     # Database settings
@@ -18,7 +19,6 @@ class Settings(BaseSettings):
     # Testing settings
     test_database_url: str = "sqlite:///./test.db"
 
-
     class Config:
         env_file = ".env"
 
@@ -29,4 +29,6 @@ class Settings(BaseSettings):
             db_protocol = "postgresql+asyncpg"
         elif self.database_type == "sqlite":
             db_protocol = "sqlite"
-        return f"{db_protocol}://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}"
+        return (
+            f"{db_protocol}://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}"
+        )
