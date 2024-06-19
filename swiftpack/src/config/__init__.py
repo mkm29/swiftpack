@@ -32,9 +32,7 @@ class Settings(BaseSettings):
             db_protocol = "postgresql+asyncpg"
         elif self.database_type == "sqlite":
             db_protocol = "sqlite"
-        return (
-            f"{db_protocol}://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}"
-        )
+        return f"{db_protocol}://{self.database_user}:{self.database_password}@{self.database_host}:{self.database_port}/{self.database_name}"
 
 
 # if __name__ == "__main__":

@@ -8,7 +8,7 @@ from sqlmodel import SQLModel  # NEW
 
 
 from alembic import context
-
+from swiftpack.src.config import Settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -43,9 +43,9 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    # url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url,
+        url=Settings().database_url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
