@@ -19,7 +19,7 @@ def get_settings():
 def create_app() -> FastAPI:
     app = FastAPI()
     # settings: Settings = get_settings()
-    app.state.settings = get_settings()
+    app.state.settings = Settings()
 
     # Dependency injection for the session
     @app.on_event("startup")

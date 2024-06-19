@@ -16,12 +16,6 @@ repos:
         - id: check-toml
         - id: detect-aws-credentials
 
-  # strips outputs from notebook files to reduce churn and minimize repo size
-  - repo: https://github.com/kynan/nbstripout
-    rev: "0.6.1"
-    hooks:
-      - id: nbstripout
-
   # Prevent old Pythonisms
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.7.0
@@ -35,15 +29,15 @@ repos:
     - id: checkmake
 
   # Ensure version in repo remains 0.0.0 so version can be set through git tags
-  - repo: local
-    hooks:
-      - id: poetry-version-resetter
-        name: Reset Poetry Project Version to 0.0.0
-        entry: "make poetry-set-version ARTIFACT_VERSION=0.0.0"
-        language: system
-        files: pyproject.toml
-        pass_filenames: false
-        verbose: true
+  # - repo: local
+  #   hooks:
+  #     - id: poetry-version-resetter
+  #       name: Reset Poetry Project Version to 0.0.0
+  #       entry: "make poetry-set-version ARTIFACT_VERSION=0.0.0"
+  #       language: system
+  #       files: pyproject.toml
+  #       pass_filenames: false
+  #       verbose: true
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
