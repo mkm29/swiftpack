@@ -15,8 +15,10 @@ def get_engine():
     engine = create_async_engine(database_url, echo=True, future=True)
     yield engine
 
+
 # database_url: str = Settings().database_url
 # engine = create_async_engine(database_url, echo=True, future=True)
+
 
 async def init_db():
     async with next(get_engine()).begin() as conn:

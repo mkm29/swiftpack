@@ -39,7 +39,8 @@
     <li>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#basic-usage">Basic</a></li>
+        <li><a href="#usage-init">Initialization</a></li>
+        <li><a href="#usage-basic">Basic</a></li>
     </li>
     <li><a href="#features">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -71,7 +72,7 @@ This project contains a simple Python® project that demonstrates how to work wi
 > **Quickstart:** With [Homebrew](https://brew.sh) installed and `brew` available (`which brew`):
 > ```bash
 > # if you use the gh CLI tool
-> gh repo clone target/make-python-devex
+> gh repo clone mkm29/swiftpack
 > # or just git
 > git clone https://github.com/mkm29/swiftpack.git
 > # then set it up, run deps twice in separate invocations
@@ -204,13 +205,6 @@ Distributed under the MIT License. See [LICENSE](./LICENSE.md) for more informat
 * Lead Developer - Mitchell Murphy
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Legal Notices
-
-See [LICENSE](LICENSE.md) for licensing information.
-
-"Python" and the Python logos are trademarks or registered trademarks of the Python Software Foundation,
-used by Target [with permission](https://www.python.org/psf/trademarks/#how-to-use-the-trademarks) from the Foundation.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
