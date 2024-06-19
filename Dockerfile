@@ -23,14 +23,29 @@ RUN . /venv/bin/activate && poetry install --no-dev --no-root
 COPY . .
 RUN . /venv/bin/activate && poetry build
 
-FROM base as final
+FROM python:3.11.8-slim as prod
 
-COPY --from=builder /venv /venv
-COPY --from=builder /app/dist .
+COPY --from=builder --chown=65534:65534 /venv /venv
+COPY --from=builder --chown=65534:65534 /app/dist .
 
 ENV PATH="/venv/bin:$PATH"
 
-RUN pip install *.whl
+# harden
+# update util-linux
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    util-linux \
+    libc-bin \
+    && rm -rf /var/lib/apt/lists/*
+
+# update pypa-setuptool
+RUN pip install --upgrade pip setuptools wheel
+
+# switch to the nobody user
+USER 65534
+
+RUN pip install  *.whl
+
+EXPOSE 8000
 
 # Since the virtual environment is activated in a RUN instruction, it will not persist to the ENTRYPOINT or CMD.
 ENTRYPOINT ["/bin/bash", "-c", "source /venv/bin/activate && exec $0 \"$@\"", "uvicorn"]
